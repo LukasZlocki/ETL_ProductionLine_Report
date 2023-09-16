@@ -47,8 +47,7 @@ namespace ETL_ProductionLine_Report.DataExtraction
                 oneDataStringLine = "";
             }
             Console.WriteLine("Data extracted.");
-            Console.WriteLine("Total Columns: " + totalColumns);
-            Console.WriteLine("Total Rows: " + totalRows);
+            ShowQuantityOfRowsAndColumnsInDataset();
         }
 
         /// <summary>
@@ -66,9 +65,7 @@ namespace ETL_ProductionLine_Report.DataExtraction
                     break;
                 }
             }
-            Console.WriteLine();
-            Console.WriteLine("Total Columns: " + totalColumns);
-            Console.WriteLine("Total Rows: " + totalRows);
+            ShowQuantityOfRowsAndColumnsInDataset();
         }
 
         /// <summary>
@@ -95,6 +92,14 @@ namespace ETL_ProductionLine_Report.DataExtraction
         public int GetTotalRows()
         {
             return totalRows;
+        }
+
+        private void ShowQuantityOfRowsAndColumnsInDataset()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Extracted data set information:");
+            Console.WriteLine("Total Columns: " + totalColumns);
+            Console.WriteLine("Total Rows: " + totalRows);
         }
     }
 }
