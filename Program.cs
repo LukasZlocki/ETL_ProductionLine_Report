@@ -24,8 +24,10 @@ for (int i=0; i<=50; i++)
         string dataString = Convert.ToString(de.ReadCell(i, j));
         if (dataString != "end of excel data")
         {
-            oneDataStringLine = oneDataStringLine + "," + dataString;
+            oneDataStringLine = oneDataStringLine + dataString + ",";
+            continue;
         }
+        oneDataStringLine = oneDataStringLine.TrimEnd(',');
     }
     Console.WriteLine("" + oneDataStringLine);
     oneDataStringLine = "";
