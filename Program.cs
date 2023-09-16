@@ -11,8 +11,6 @@ Console.WriteLine("Let's do it !");
 
 ExcelExtractor de = new ExcelExtractor(fullPath, 3);
 Console.WriteLine("" + Convert.ToString(de.ReadCell(2,2)));
-Console.WriteLine("Total Columns: " + de.GetTotalColumns());
-Console.WriteLine("Total Rows: " + de.GetTotalRows());
 
 // Extracting data here
 Console.WriteLine("");
@@ -21,3 +19,4 @@ Console.WriteLine("Test to extract and show data from excel file");
 ExcelExtractor ee = new ExcelExtractor(fullPath, 3);
 ee.ExtractDataFromExcelFile();
 ee.ShowExtractedDataFromExcelFile(5);
+ee.ShowExtractedDataFromExcelFile(0);

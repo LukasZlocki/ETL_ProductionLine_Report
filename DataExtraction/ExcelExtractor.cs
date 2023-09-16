@@ -1,6 +1,4 @@
 using Microsoft.Office.Interop.Excel;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace ETL_ProductionLine_Report.DataExtraction
@@ -26,6 +24,9 @@ namespace ETL_ProductionLine_Report.DataExtraction
             totalRows = ws.UsedRange.Rows.Count;
         }
 
+        /// <summary>
+        /// Extracts data from excel file.
+        /// </summary>
         public void ExtractDataFromExcelFile()
         {
             string oneDataStringLine = "";
@@ -45,8 +46,15 @@ namespace ETL_ProductionLine_Report.DataExtraction
                 dataSet.Add(oneDataStringLine); // Adding row of data string to main dataset
                 oneDataStringLine = "";
             }
+            Console.WriteLine("Data extracted.");
+            Console.WriteLine("Total Columns: " + totalColumns);
+            Console.WriteLine("Total Rows: " + totalRows);
         }
 
+        /// <summary>
+        /// Show rows with extracted data. 
+        /// </summary>
+        /// <param name="rowsToShow">Quantity of rows to show. 0 - show all rows</param>
         public void ShowExtractedDataFromExcelFile(int rowsToShow)
         {
             int counter = 0;
@@ -58,8 +66,17 @@ namespace ETL_ProductionLine_Report.DataExtraction
                     break;
                 }
             }
+            Console.WriteLine();
+            Console.WriteLine("Total Columns: " + totalColumns);
+            Console.WriteLine("Total Rows: " + totalRows);
         }
 
+        /// <summary>
+        /// Reading data from one cell.
+        /// </summary>
+        /// <param name="i">Column number.</param>
+        /// <param name="j">Row number.</param>
+        /// <returns>Data from excell cel.l</returns>
         public string ReadCell(int i, int j)
         {
             i++;
@@ -79,6 +96,5 @@ namespace ETL_ProductionLine_Report.DataExtraction
         {
             return totalRows;
         }
-
     }
 }
