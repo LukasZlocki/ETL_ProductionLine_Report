@@ -1,5 +1,6 @@
 using Microsoft.Office.Interop.Excel;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace ETL_ProductionLine_Report.DataExtraction
@@ -21,8 +22,8 @@ namespace ETL_ProductionLine_Report.DataExtraction
             this.path = path;
             wb = excel.Workbooks.Open(path);
             ws = wb.Worksheets[Sheet];
-            this.totalColumns = ws.UsedRange.Columns.Count;
-            this.totalRows = ws.UsedRange.Rows.Count;
+            totalColumns = ws.UsedRange.Columns.Count;
+            totalRows = ws.UsedRange.Rows.Count;
         }
 
         public void ExtractDataFromExcelFile()
@@ -38,19 +39,26 @@ namespace ETL_ProductionLine_Report.DataExtraction
                     {
                         oneDataStringLine = oneDataStringLine + dataString + ",";
                         continue;
-                    }
-                    oneDataStringLine = oneDataStringLine.TrimEnd(',');
-                    this.dataSet.Add(oneDataStringLine); // Adding row of data string to main dataset
+                    }           
                 }
+                oneDataStringLine = oneDataStringLine.TrimEnd(',');
+                dataSet.Add(oneDataStringLine); // Adding row of data string to main dataset
                 oneDataStringLine = "";
             }
         }
 
-        public void ShowExtractedDataFromExcelFile()
+        public void ShowExtractedDataFromExcelFile(int rowsToShow)
         {
-            // ToDo: Code it here 
+            int counter = 0;
+            foreach(string element in dataSet)
+            {
+                Console.WriteLine(element);
+                counter++;
+                if (counter == rowsToShow) {
+                    break;
+                }
+            }
         }
-
 
         public string ReadCell(int i, int j)
         {
