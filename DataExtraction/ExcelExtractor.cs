@@ -6,18 +6,51 @@ namespace ETL_ProductionLine_Report.DataExtraction
 {
     class ExcelExtractor
     {
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
-        string path;
+        private _Application excel = new _Excel.Application();
+        private Workbook wb;
+        private Worksheet ws;
+        private string path;
+        private int totalColumns;
+        private int totalRows;
         
+        private List<string> dataSet = new List<string>(); 
+
         // constr
         public ExcelExtractor(string path, int Sheet)
         {
             this.path = path;
             wb = excel.Workbooks.Open(path);
             ws = wb.Worksheets[Sheet];
+            this.totalColumns = ws.UsedRange.Columns.Count;
+            this.totalRows = ws.UsedRange.Rows.Count;
         }
+
+        public void ExtractDataFromExcelFile()
+        {
+            string oneDataStringLine = "";
+
+            for (int i = 0; i <= 50; i++)
+            {
+                for (int j = 0; j <= totalColumns; j++)
+                {
+                    string dataString = Convert.ToString(ReadCell(i, j));
+                    if (dataString != "end of excel data")
+                    {
+                        oneDataStringLine = oneDataStringLine + dataString + ",";
+                        continue;
+                    }
+                    oneDataStringLine = oneDataStringLine.TrimEnd(',');
+                    this.dataSet.Add(oneDataStringLine); // Adding row of data string to main dataset
+                }
+                oneDataStringLine = "";
+            }
+        }
+
+        public void ShowExtractedDataFromExcelFile()
+        {
+            // ToDo: Code it here 
+        }
+
 
         public string ReadCell(int i, int j)
         {
@@ -31,12 +64,12 @@ namespace ETL_ProductionLine_Report.DataExtraction
 
         public int GetTotalColumns()
         {
-            return ws.UsedRange.Columns.Count;
+            return totalColumns;
         }
 
         public int GetTotalRows()
         {
-            return ws.UsedRange.Rows.Count;
+            return totalRows;
         }
 
     }
