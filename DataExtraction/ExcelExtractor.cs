@@ -86,20 +86,20 @@ namespace ETL_ProductionLine_Report.DataExtraction
 
         public int GetTotalColumns()
         {
-            return totalColumns;
+            return totalColumns + 1;
         }
 
         public int GetTotalRows()
         {
-            return totalRows;
+            return totalRows + 1;
         }
 
         private void ShowQuantityOfRowsAndColumnsInDataset()
         {
             Console.WriteLine();
             Console.WriteLine("Extracted data set information:");
-            Console.WriteLine("Total Columns: " + totalColumns);
-            Console.WriteLine("Total Rows: " + totalRows);
+            Console.WriteLine("Total Columns: " + (totalColumns + 1));
+            Console.WriteLine("Total Rows: " + (totalRows + 1));
         }
     }
 }
