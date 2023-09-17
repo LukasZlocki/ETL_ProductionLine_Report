@@ -53,7 +53,7 @@ namespace ETL_ProductionLine_Report.DataExtraction
         /// <summary>
         /// Show rows with extracted data. 
         /// </summary>
-        /// <param name="rowsToShow">Quantity of rows to show. 0 - show all rows</param>
+        /// <param name="rowsToShow">Quantity of rows to show. 0 - show all rows.</param>
         public void ShowExtractedDataFromExcelFile(int rowsToShow)
         {
             int counter = 0;
@@ -73,7 +73,7 @@ namespace ETL_ProductionLine_Report.DataExtraction
         /// </summary>
         /// <param name="i">Column number.</param>
         /// <param name="j">Row number.</param>
-        /// <returns>Data from excell cel.l</returns>
+        /// <returns>Data from excel cell.</returns>
         public string ReadCell(int i, int j)
         {
             i++;
@@ -84,14 +84,34 @@ namespace ETL_ProductionLine_Report.DataExtraction
                 return "end of excel data";
         }
 
+        // GET
+        /// <summary>
+        /// Get total quantity of columns in extracted data from excel file.
+        /// </summary>
+        /// <returns>Quantity of columns.</returns>
         public int GetTotalColumns()
         {
             return totalColumns + 1;
         }
 
+        // GET
+        /// <summary>
+        /// Get total quantity of rows in extracted data from excel file.
+        /// </summary>
+        /// <returns>Quantity of rows.</returns>
         public int GetTotalRows()
         {
             return totalRows + 1;
+        }
+
+        // GET
+        /// <summary>
+        /// Send dataSet with extracted data from excel file.
+        /// </summary>
+        /// <returns>list of strings arrays as data set.</returns>
+        public List<string> GetExtractedDataset()
+        {
+            return dataSet;
         }
 
         private void ShowQuantityOfRowsAndColumnsInDataset()
