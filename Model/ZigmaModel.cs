@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace ETL_ProductionLine_Report.Model
     internal class ZigmaModel : IZigmaModel
     {
         private List<string[]> ZigmaDataset = new List<string[]>();
+        private int ZigmaColumnsQuantity;
+        private int ZigmaRowsQuantity;
 
         /// <summary>
         /// Change old dataset with new dataset. Old dataset will be deleted.
@@ -55,6 +58,21 @@ namespace ETL_ProductionLine_Report.Model
 
         public void PrintDataset(int quantityOfRowsToPrint)
         {
+            PrintDataset(ZigmaDataset, quantityOfRowsToPrint);
+        }
+
+        public void PrintDataset()
+        {
+            PrintDataset(ZigmaDataset);
+        }
+
+        public void PrintDataset(List<string[]> zigmaDataset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PrintDataset(List<string[]> zigmaDataset, int quantityOfRowsToPrint)
+        {
             int counter = 0;
             foreach (string[] element in ZigmaDataset)
             {
@@ -72,9 +90,15 @@ namespace ETL_ProductionLine_Report.Model
             }
         }
 
-        public void PrintDataset()
+        private int CalculateColumnsQuantity(List<string[]> dataset)
         {
-            throw new NotImplementedException();
+            int _columnsQuantity = dataset[0].Length;
+            return _columnsQuantity;
+        }
+       private int CalculateRowsQuantity(List<string[]> dataset)
+        {
+            int _rowsQuantity = dataset.Count;
+            return _rowsQuantity;
         }
     }
 }
