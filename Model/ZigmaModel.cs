@@ -15,6 +15,11 @@ namespace ETL_ProductionLine_Report.Model
             throw new NotImplementedException();
         }
 
+        public void CreateZigmaModel(List<string> csvModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string[]> GetDataset()
         {
             throw new NotImplementedException();
