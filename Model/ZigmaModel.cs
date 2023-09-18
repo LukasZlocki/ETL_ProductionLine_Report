@@ -53,12 +53,26 @@ namespace ETL_ProductionLine_Report.Model
             return ZigmaDataset;
         }
 
-        public void PrintDataset(List<string> dataset, int rowsToPrint)
+        public void PrintDataset(int quantityOfRowsToPrint)
         {
-            throw new NotImplementedException();
+            int counter = 0;
+            foreach (string[] element in ZigmaDataset)
+            {
+                if (counter == quantityOfRowsToPrint)
+                {
+                    break;
+                }
+                string _showString = "" + counter + " ";
+                for (int i = 0; i < element.Count(); i++)
+                {
+                    _showString = "" + _showString + ", " + "[ " + element[i] + " ]";
+                }
+                Console.WriteLine("" + _showString);
+                counter++;
+            }
         }
 
-        public void PrintDataset(List<string> dataset)
+        public void PrintDataset()
         {
             throw new NotImplementedException();
         }

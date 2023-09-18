@@ -9,7 +9,7 @@
         // Update
         public void ChangeDataset(List<string[]> newDataset);
         // Print
-        public void PrintDataset(List<string> dataset, int rowsToPrint);
-        public void PrintDataset(List<string> dataset);
+        public void PrintDataset(int quantityOfRowsToPrint);
+        public void PrintDataset();
     }
 }
