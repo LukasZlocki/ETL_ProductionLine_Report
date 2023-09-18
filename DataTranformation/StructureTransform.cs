@@ -4,6 +4,7 @@
     {
         private List<string[]> MainDataset = new List<string[]>(); 
 
+        // !! Method moved to ZIGMA
         public void ConvertCsvToListOfStringArrayStructure(List<string> dataset)
         {
             List<string[]> _newDataList = new List<string[]>();
