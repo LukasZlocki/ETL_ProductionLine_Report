@@ -16,6 +16,11 @@
             MainDataset = _newDataList;
         }
 
+        public List<string> ConvertListOfStringArrayStructureToCsv(List<string[]> dataset)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string[]> GetDataset()
         {
             return MainDataset;
@@ -36,13 +41,17 @@
                 string _showString = "";
                 for (int i = 0; i < element.Count(); i++)
                 {
-                    _showString = _showString + ", " + "[ " + element[i] + " ]";
+                    _showString = "" + _showString + ", " + "[ " + element[i] + " ]";
                 }
                 Console.WriteLine("" + _showString);
                 counter++;
             }
         }
 
+        /// <summary>
+        /// Transforming given column number to date [yyyy/mm/dd].
+        /// </summary>
+        /// <param name="columnNumber">Column number to transform into date.</param>
         public void TransformColumnToDate(int columnNumber)
         {
             double daysToAdd;
@@ -63,7 +72,9 @@
                     Console.WriteLine("Error: " + ex);
                     continue;
                 }
-                element[columnNumber] = formattedDate;
+                if (formattedDate != "" || formattedDate != null) {
+                    element[columnNumber] = formattedDate;
+                } 
             }
         }
     }
