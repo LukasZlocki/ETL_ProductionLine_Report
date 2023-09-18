@@ -8,21 +8,49 @@ namespace ETL_ProductionLine_Report.Model
 {
     internal class ZigmaModel : IZigmaModel
     {
-        private List<string[]> Model = new List<string[]>();
+        private List<string[]> ZigmaDataset = new List<string[]>();
 
+        /// <summary>
+        /// Change old dataset with new dataset. Old dataset will be deleted.
+        /// </summary>
+        /// <param name="newDataset">New Zigma datasaet</param>
         public void ChangeDataset(List<string[]> newDataset)
         {
-            throw new NotImplementedException();
+            if (newDataset != null)
+            {
+                ZigmaDataset.Clear();
+                ZigmaDataset = newDataset;
+            }
+            else
+            {
+                Console.Write("Error. Not able to change dataset. Given data set is empty.");
+            }
+
         }
 
-        public void CreateZigmaModel(List<string> csvModel)
+        /// <summary>
+        /// Creating Zigma dataset from csv file.
+        /// </summary>
+        /// <param name="dataset">List of strings with coma separators</param>
+        public void CreateZigmaModel(List<string> dataset)
         {
-            throw new NotImplementedException();
+            List<string[]> _newDataList = new List<string[]>();
+            // ToDo: Write unit test for the class
+            foreach (string element in dataset)
+            {
+                string[] divString = element.Split(',');
+                _newDataList.Add(divString);
+            }
+            ZigmaDataset = _newDataList;
         }
 
+        /// <summary>
+        /// Return Zigma dataset
+        /// </summary>
+        /// <returns>List<string[]></string></returns>
         public List<string[]> GetDataset()
         {
-            throw new NotImplementedException();
+            return ZigmaDataset;
         }
 
         public void PrintDataset(List<string> dataset, int rowsToPrint)
