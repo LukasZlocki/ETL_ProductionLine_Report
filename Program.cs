@@ -1,4 +1,5 @@
 ﻿using ETL_ProductionLine_Report.DataExtraction;
+using ETL_ProductionLine_Report.DataTranformation;
 
 // Get the base directory of your application
 //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -19,4 +20,14 @@ Console.WriteLine("Test to extract and show data from excel file");
 ExcelExtractor ee = new ExcelExtractor(fullPath, 3);
 ee.ExtractDataFromExcelFile();
 ee.ShowExtractedDataFromExcelFile(5);
-ee.ShowExtractedDataFromExcelFile(0);
+//ee.ShowExtractedDataFromExcelFile(0);
+
+
+// DATA TRANSFORMATION
+StructureTransform st = new StructureTransform();
+Console.WriteLine("Tranforming data structure");
+st.ConvertCsvToListOfStringArrayStructure(ee.GetExtractedDataset());
+st.PrintDataset(5);
+Console.WriteLine("Tranforming date time ");
+st.TransformColumnToDate(0);
+st.PrintDataset(5);

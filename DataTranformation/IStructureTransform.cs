@@ -2,6 +2,12 @@
 {
     internal interface IStructureTransform
     {
-        public List<List<string>> ConvertCsvToListOfListsStructure(List<string> dataset);
+        public void ConvertCsvToListOfStringArrayStructure(List<string> dataset);
+        
+        // GET
+        public List<string[]> GetDataset();
+
+        public void PrintDataset(int quantityOfRowsToPrint);
+
     }
 }
