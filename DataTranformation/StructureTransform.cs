@@ -2,9 +2,13 @@
 {
     internal class StructureTransform : IStructureTransform
     {
-        private List<string[]> MainDataset = new List<string[]>(); 
+        private List<string[]> MainDataset = new List<string[]>();
 
-        // !! Method moved to ZIGMA
+        // ToDo:  Method moved to ZIGMA or convert to zigma during reading from csv
+        /// <summary>
+        /// Converting csv do Zigma dataset
+        /// </summary>
+        /// <param name="dataset">list of string with csv</param>
         public void ConvertCsvToListOfStringArrayStructure(List<string> dataset)
         {
             List<string[]> _newDataList = new List<string[]>();
@@ -17,17 +21,28 @@
             MainDataset = _newDataList;
         }
 
+        // ToDo: Write a method here:
+        /// <summary>
+        /// Convert Zigma dataset to csv
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public List<string> ConvertListOfStringArrayStructureToCsv(List<string[]> dataset)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns Zigma dataset
+        /// </summary>
+        /// <returns>Zigma dataset</returns>
         public List<string[]> GetDataset()
         {
             return MainDataset;
         }
 
-        // !! Method moved to ZIGMA
+        // ToDo: Method move to ZIGMA
         /// <summary>
         /// Prints rows of dataset.
         /// </summary>
