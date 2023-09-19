@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ETL_ProductionLine_Report.Model
+﻿namespace ETL_ProductionLine_Report.Model
 {
-    internal class ZigmaModel : IZigmaModel
+    public class ZigmaModel : IZigmaModel
     {
         private List<string[]> ZigmaDataset = new List<string[]>();
         private int ZigmaColumnsQuantity;
         private int ZigmaRowsQuantity;
 
         /// <summary>
-        /// Change old dataset with new dataset. Old dataset will be deleted.
+        /// Exchange old dataset with new dataset. Old dataset will be deleted.
         /// </summary>
-        /// <param name="newDataset">New Zigma datasaet</param>
+        /// <param name="newDataset">New Zigma data set</param>
         public void ChangeDataset(List<string[]> newDataset)
         {
             if (newDataset != null)
@@ -56,21 +49,37 @@ namespace ETL_ProductionLine_Report.Model
             return ZigmaDataset;
         }
 
+        /// <summary>
+        /// Printing Zigma dataset.
+        /// </summary>
+        /// <param name="zigmaDataset">Zigma dataset</param>
+        /// <param name="quantityOfRowsToPrint">Number of rows to print</param>
         public void PrintDataset(int quantityOfRowsToPrint)
         {
             PrintDataset(ZigmaDataset, quantityOfRowsToPrint);
         }
 
+        /// <summary>
+        /// Printing Zigma whole dataset.
+        /// </summary>
         public void PrintDataset()
         {
             PrintDataset(ZigmaDataset);
         }
 
+        /// <summary>
+        /// Printing Zigma whole dataset.
+        /// </summary>
         public void PrintDataset(List<string[]> zigmaDataset)
         {
-            throw new NotImplementedException();
+            PrintDataset(zigmaDataset, 0);
         }
 
+        /// <summary>
+        /// Printing Zigma dataset with specific quantity of rows.
+        /// </summary>
+        /// <param name="zigmaDataset"></param>
+        /// <param name="quantityOfRowsToPrint">Number of rows to print.</param>
         public void PrintDataset(List<string[]> zigmaDataset, int quantityOfRowsToPrint)
         {
             int counter = 0;
