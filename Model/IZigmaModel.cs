@@ -11,5 +11,6 @@
         // Print
         public void PrintDataset(int quantityOfRowsToPrint);
         public void PrintDataset();
+        public void PrintDataset(List<string[]> zigmaDataset, int quantityOfRowsToPrint);
     }
 }
