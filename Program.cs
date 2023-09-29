@@ -1,7 +1,9 @@
 ﻿
 // ETL project
 
-//using Zigma.ExtractionTools;
+
+using Zigma.ExtractionTools;
+using Zigma.Models;
 
 Console.WriteLine("Let's do it !");
 
@@ -17,4 +19,12 @@ Console.WriteLine("Let's do it !");
 // ToDo Zigma | TransformTool | Add method to divide date by day / week / month and sign what to do with rest of columns (+, -, *, /)
 // ToDo Zigma | TransformTool | Add method to do math operation in particular column -ex: have result in particular column (operation +, - , * , /, )
 
-//ExtractionTool extract = new();
+// STEP I : Extracting data from csv row file
+ExtractionTool extraction = new();
+ZigmaModel model = new ZigmaModel();
+
+string filePath = "C:\\0 VirtualServer\\ETL\\";
+string fileName = "raw_raports.csv";
+model.CreateZigmaDataset(extraction.LoadFromCsvFile(filePath, fileName));
+// Printing dataset
+model.PrintZigmaDataset(5);
