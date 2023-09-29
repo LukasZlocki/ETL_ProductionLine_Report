@@ -1,33 +1,16 @@
-﻿using ETL_ProductionLine_Report.DataExtraction;
-using ETL_ProductionLine_Report.DataTranformation;
-
-// Get the base directory of your application
-//string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-//string path = "Source\\jedox_new.xlsm";
-//string fullPath = Path.Combine(baseDirectory, path);
-string fullPath = "C:/jedox/jedox_new.xlsm";
-
+﻿
 // ETL project
 Console.WriteLine("Let's do it !");
 
-ExcelExtractor de = new ExcelExtractor(fullPath, 3);
-Console.WriteLine("" + Convert.ToString(de.ReadCell(2,2)));
+// [29.09.2023]
+// ToDo - Plan
+// ToDo: Get data from raw csv
+// ToDo: Transform column with date to date format yyyy/mm/dd
+// ToDo: Create daily report with summary of units planned / output - daily report / weekly report - ! extend zigma to perform this activities ! 
+// ToDo ZIGMA | TransformTool | Add method to create new column (add new column at the end of dataset)
+// ToDo ZIGMA | TransformTool | Add method to remove column
+// ToDo Zigma | TransformTool | Add method to move particular column to new possition ex: no move column nb 5 to 3) rest columns will move +1 column (ColumnMove(a, c)) 
+// ToDo Zigma | TransformTool | Add method to switch columns ex: switch column 3 with column 2 (ColumnSwitch(a, b))
+// ToDo Zigma | TransformTool | Add method to divide date by day / week / month and sign what to do with rest of columns (+, -, *, /)
+// ToDo Zigma | TransformTool | Add method to do math operation in particular column -ex: have result in particular column (operation +, - , * , /, )
 
-// Extracting data here
-Console.WriteLine("");
-Console.WriteLine("");
-Console.WriteLine("Test to extract and show data from excel file");
-ExcelExtractor ee = new ExcelExtractor(fullPath, 3);
-ee.ExtractDataFromExcelFile();
-ee.ShowExtractedDataFromExcelFile(5);
-//ee.ShowExtractedDataFromExcelFile(0);
-
-
-// DATA TRANSFORMATION
-StructureTransform st = new StructureTransform();
-Console.WriteLine("Tranforming data structure");
-st.ConvertCsvToListOfStringArrayStructure(ee.GetExtractedDataset());
-st.PrintDataset(5);
-Console.WriteLine("Tranforming date time ");
-st.TransformColumnToDate(0);
-st.PrintDataset(5);
