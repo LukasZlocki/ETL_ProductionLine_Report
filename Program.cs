@@ -1,5 +1,8 @@
 ﻿
 // ETL project
+
+//using Zigma.ExtractionTools;
+
 Console.WriteLine("Let's do it !");
 
 // [29.09.2023]
@@ -14,3 +17,4 @@ Console.WriteLine("Let's do it !");
 // ToDo Zigma | TransformTool | Add method to divide date by day / week / month and sign what to do with rest of columns (+, -, *, /)
 // ToDo Zigma | TransformTool | Add method to do math operation in particular column -ex: have result in particular column (operation +, - , * , /, )
 
+//ExtractionTool extract = new();
