@@ -1,13 +1,6 @@
-﻿
-// ETL project
-
-
-using Zigma.ExtractionTools;
+﻿using Zigma.ExtractionTools;
 using Zigma.Models;
 
-Console.WriteLine("Let's do it !");
-
-// [29.09.2023]
 // ToDo - Plan
 // ToDo: Get data from raw csv
 // ToDo: Transform column with date to date format yyyy/mm/dd
