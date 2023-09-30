@@ -20,4 +20,5 @@ string filePath = "C:\\0 VirtualServer\\ETL\\";
 string fileName = "raw_raports.csv";
 model.CreateZigmaDataset(extraction.LoadFromCsvFile(filePath, fileName));
 // Printing dataset
-model.PrintZigmaDataset(5);
+model.PrintZigmaDataset(10);
+model.PrintZigmaDataset(1); 
