@@ -24,8 +24,10 @@ model.CreateZigmaDataset(extraction.LoadFromCsvFile(filePath, fileName));
 model.PrintZigmaDataset(10);
 
 // ToDo ZIGMA | TransformTool | Add method to remove column
-// ToDo ZIGMA | TransformTool | Add method to remove column
+// Removing col 0 with row nummber
 ZigmaModel NewModelColumnRemoved = new();
 NewModelColumnRemoved = transform.ColumnRemove(model, 0);
 Console.WriteLine("Print dataset with removed column");
 NewModelColumnRemoved.PrintZigmaDataset(10);
+
+
