@@ -30,4 +30,18 @@ NewModelColumnRemoved = transform.ColumnRemove(model, 0);
 Console.WriteLine("Print dataset with removed column");
 NewModelColumnRemoved.PrintZigmaDataset(10);
 
+// Change date in dataset
+// is [2022-02-21 00:00:00]
+// will be [2022-02-21]
+ZigmaModel dateDataset;
+dateDataset = NewModelColumnRemoved;
+dateDataset = transform.TransformColumnToDate(dateDataset, 0);
+Console.WriteLine("Change date to simpler format:");
+dateDataset.PrintZigmaDataset(10);
+
+
+// Creating daily report
+
+
+// Creating weekly report
 
