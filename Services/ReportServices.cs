@@ -58,7 +58,7 @@ namespace ETL_ProductionLine_Report.Services {
             return _dayData;
         }
 
-        private List<string> GetListOfDatesFromDataset(List<string[]> dataset, int columnNumberWithDate)
+        public List<string> GetListOfDatesFromDataset(List<string[]> dataset, int columnNumberWithDate)
         {
             List<string> _listOfDates = new List<string>();
             foreach (string[] row in dataset){
