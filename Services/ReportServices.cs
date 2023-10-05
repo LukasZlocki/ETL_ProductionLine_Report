@@ -1,7 +1,7 @@
 using ETL_ProductionLine_Report.Models;
 
 namespace ETL_ProductionLine_Report.Services {
-    internal class ReportService : IReportService
+    public class ReportService : IReportService
     {
         public List<ReportDaily> GetListOfDailyReportsBaseOnDataset(List<string[]> dataset, int columnWithDate)
         {
@@ -10,8 +10,23 @@ namespace ETL_ProductionLine_Report.Services {
             return dailyReportsList;
         }
 
-        public ReportDaily GetReportForGivenDay(List<string[]> dataset, string Date, int columnNumberWithDate)
+        public ReportDaily GetReportForGivenDay(List<string[]> dataset, string day, int columnNumberWithDate)
         {
+            List<string[]> _dayData = new();
+            _dayData = ExtractDatasetForGivenDay(dataset, day, columnNumberWithDate);
+
+            foreach (string[] row in dataset)
+            {
+                if (row[columnNumberWithDate] == day)
+                {
+                    _dayData.Add(row);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
             ReportDaily _dailyReport = new();
             // ToDo: Code logic here
             return _dailyReport;
@@ -24,6 +39,23 @@ namespace ETL_ProductionLine_Report.Services {
                 _listOfDailyReports.Add(_newReport);
             }
             return _listOfDailyReports;
+        }
+
+        private List<string[]> ExtractDatasetForGivenDay(List<string[]> dataset, string day, int columnNumberWithDate)
+        {
+            List<string[]> _dayData = new();
+            foreach (string[] row in dataset)
+            {
+                if (row[columnNumberWithDate] == day)
+                {
+                    _dayData.Add(row);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return _dayData;
         }
 
         private List<string> GetListOfDatesFromDataset(List<string[]> dataset, int columnNumberWithDate)
