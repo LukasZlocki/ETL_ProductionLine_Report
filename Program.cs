@@ -39,7 +39,7 @@ dateDataset = transform.TransformColumnToDate(dateDataset, 0);
 Console.WriteLine("Change date to simpler format:");
 dateDataset.PrintZigmaDataset(10);
 
-
+ 
 // Creating daily report
 
 
