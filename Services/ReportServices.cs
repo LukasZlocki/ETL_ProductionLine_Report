@@ -11,7 +11,7 @@ namespace ETL_ProductionLine_Report.Services {
             return dailyReportsList;
         }
 
-        //[06.10.2023]  - Done
+        //[09.10.2023]  - Done
         public ReportDaily GetReportForGivenDay(List<string[]> dataset, string day, int columnNumberWithDate)
         {
             List<string[]> _dayData;
@@ -25,6 +25,7 @@ namespace ETL_ProductionLine_Report.Services {
             }
             // Calculation of planned production to real production
             double _plannedPercentage = Convert.ToDouble(_dailyReportBuild.RealOutput) / Convert.ToDouble(_dailyReportBuild.PlannedOutput);
+            _plannedPercentage = Math.Round(_plannedPercentage, 2);
             _dailyReportBuild.PlanedPercentage = Convert.ToString(_plannedPercentage);
             // Add user date to daily report
             _dailyReportBuild.Date = day;
@@ -32,8 +33,13 @@ namespace ETL_ProductionLine_Report.Services {
             return _dailyReportBuild;
         }
 
+        // [09.10.2023]
         private List<string[]> ExtractDatasetForGivenDay(List<string[]> dataset, string day, int columnNumberWithDate) {
             List<string[]> _dayData = new();
+            if (CheckIsDigit(day) == false) // this is not a date
+            {
+                return _dayData; // return ampty data
+            }
             foreach(string[] row in dataset) {
                 if (row[columnNumberWithDate] == day) {
                     _dayData.Add(row);
@@ -60,6 +66,9 @@ namespace ETL_ProductionLine_Report.Services {
             foreach (string[] row in dataset){
                 string _nextDate;
                 _nextDate = row[columnNumberWithDate];
+                if(CheckIsDigit(_nextDate) == false){ // checking if it is date or column name
+                    continue;
+                }
                 if(_listOfDates.Contains(_nextDate) == true) {
                     continue; // Date is in list of dates.
                 }
@@ -68,6 +77,12 @@ namespace ETL_ProductionLine_Report.Services {
                 }
             }
             return _listOfDates;
+        }
+
+        // [09.10.2023] check if string is digit
+        private bool CheckIsDigit(string sample){
+            bool _isDigit = char.IsDigit(sample[0]);
+            return _isDigit;
         }
     }
 }
