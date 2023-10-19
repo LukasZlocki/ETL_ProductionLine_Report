@@ -1,4 +1,7 @@
-﻿using Zigma.ExtractionTools;
+﻿using ETL_ProductionLine_Report.Models;
+using ETL_ProductionLine_Report.Repo;
+using ETL_ProductionLine_Report.Services;
+using Zigma.ExtractionTools;
 using Zigma.Models;
 using Zigma.TransformationTools;
 
@@ -25,22 +28,74 @@ model.PrintZigmaDataset(10);
 
 // ToDo ZIGMA | TransformTool | Add method to remove column
 // Removing col 0 with row nummber
-ZigmaModel NewModelColumnRemoved = new();
+ZigmaModel NewModelColumnRemoved;
 NewModelColumnRemoved = transform.ColumnRemove(model, 0);
 Console.WriteLine("Print dataset with removed column");
 NewModelColumnRemoved.PrintZigmaDataset(10);
 
+
 // Change date in dataset
 // is [2022-02-21 00:00:00]
 // will be [2022-02-21]
-ZigmaModel dateDataset;
-dateDataset = NewModelColumnRemoved;
-dateDataset = transform.TransformColumnToDate(dateDataset, 0);
+ZigmaModel dateDatasetWithDateSimplify;
+dateDatasetWithDateSimplify = NewModelColumnRemoved;
+dateDatasetWithDateSimplify = transform.TransformColumnToDate(dateDatasetWithDateSimplify, 0);
 Console.WriteLine("Change date to simpler format:");
-dateDataset.PrintZigmaDataset(10);
+dateDatasetWithDateSimplify.PrintZigmaDataset(10);
 
- 
 // Creating daily report
+ReportService serviceReport = new();
+List<string> ListOfDates = new();
+ListOfDates = serviceReport.GetListOfDatesFromDataset(dateDatasetWithDateSimplify.GetRawZigmaDataset(), 0);
+Console.WriteLine("Printing available dates");
+foreach(string element in ListOfDates){
+    Console.WriteLine("" + element);
+}
+List<ReportDaily> DailyReports = new();
+DailyReports = serviceReport.GetListOfDailyReportsBaseOnDataset(dateDatasetWithDateSimplify.GetRawZigmaDataset(), 0);
+Console.WriteLine("Daily reports calculation:");
+foreach(var report in DailyReports){
+    Console.WriteLine(" " + report.Date + " " + " " + report.PlannedOutput + " " + " " + report.RealOutput + " " + " " + report.PlanedPercentage);
+}
 
-// Creating weekly report
+// ToDo: Save daily reports to csv file
+ZigmaModel zModel = ModelTransfer.TransferReportDailyListToZigmaModel(DailyReports);
+ExtractionTool saver = new();
+saver.SaveToCsvFile(zModel.GetZigmaDataset(), "C:\\0 VirtualServer\\ETL\\out\\", "DailyReports.csv");
 
+// Creating shift report
+Console.WriteLine("*** Shift Report test - first shift report extraction ***");
+ZigmaModel shiftModel = new ZigmaModel();
+shiftModel.CreateZigmaDataset(extraction.LoadFromCsvFile(filePath, fileName));
+// Printing dataset
+shiftModel.PrintZigmaDataset(7);
+// removing not needed column nb 0
+shiftModel = transform.ColumnRemove(shiftModel, 0);
+Console.WriteLine("*** Removing  column with numeration - column nb 0 ***");
+shiftModel.PrintZigmaDataset(5);
+Console.WriteLine("*** Simplify date ***");
+shiftModel = transform.TransformColumnToDate(shiftModel, 0);
+shiftModel.PrintZigmaDataset(9);
+// Calculate shift report for given day
+ReportShiftService shiftService = new ReportShiftService();
+ReportShift shiftReport = new ReportShift();
+shiftReport = shiftService.GetShiftReportForGivenDayAndShift(shiftModel.GetRawZigmaDataset(), "2022-02-21", 0, 1);
+Console.WriteLine("Shift Report example and test:");
+Console.WriteLine(" " + shiftReport.Date + " " + " " + shiftReport.PlannedOutput + " " + " " + shiftReport.RealOutput + " " + " " + shiftReport.PlanedPercentage + " " + shiftReport.Shift);
+
+// [19.10.2023]
+// Generate list of shift reports for all available days and shifts
+Console.WriteLine("*** Generating shif reports from all available days and all available shifts ***");
+ZigmaModel csvBaseModel = new ZigmaModel();
+csvBaseModel.CreateZigmaDataset(extraction.LoadFromCsvFile(filePath, fileName));
+// Printing dataset
+Console.WriteLine("*** Printing csv data - printing 3 rows ***");
+csvBaseModel.PrintZigmaDataset(3);
+// removing not needed column nb 0
+Console.WriteLine("*** Removing  not needed column nb 0 ***");
+csvBaseModel = transform.ColumnRemove(csvBaseModel, 0);
+csvBaseModel.PrintZigmaDataset(3);
+Console.WriteLine("*** Simplify date ***");
+csvBaseModel = transform.TransformColumnToDate(csvBaseModel, 0);
+csvBaseModel.PrintZigmaDataset(9);
+// add extracting column with date and removing column description in order to achive pure list of dates | Working on Zigma library to have it avialble in lib

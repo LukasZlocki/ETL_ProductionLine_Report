@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETL_ProductionLine_Report", "ETL_ProductionLine_Report.csproj", "{A1E4A837-288D-4D1C-A2BC-5553BEB5699B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zigma", "..\..\Zigma\Zigma\Zigma.csproj", "{F4D4604F-CF2A-4039-980E-70C8C0FF9A64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zigma", "..\..\codeworld\Zigma\Zigma.csproj", "{F4D4604F-CF2A-4039-980E-70C8C0FF9A64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

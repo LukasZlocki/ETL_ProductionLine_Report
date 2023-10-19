@@ -8,6 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Zigma\Zigma\Zigma.csproj" />
+    <ProjectReference Include="..\..\codeworld\Zigma\Zigma.csproj" />
   </ItemGroup>
 </Project>
