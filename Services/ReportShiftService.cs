@@ -1,13 +1,19 @@
-using System.Diagnostics;
 using ETL_ProductionLine_Report.Services;
+using Zigma.Models;
 
 namespace ETL_ProductionLine_Report.Models {
     public class ReportShiftService : ReportShift, IReportShiftService
     {
         // ToDo : Code service here
-        public List<ReportShift> GetListOfShiftReportsBaseOnDataset(List<string[]> dataset, int columnWithDate)
+        //[20.10.2023]
+        public List<ReportShift> GetListOfShiftReportsBaseOnDataset(List<string[]> dataset, int columnWithDate, ZigmaModel _datesModel) 
         {
-            throw new NotImplementedException();
+            List<ReportShift> _reportShift = new();
+            foreach( var date in _datesModel.GetRawZigmaDataset()){
+                string _date = string.Join("", date);
+                _reportShift.Add(GetShiftReportForGivenDayAndShift(dataset, _date, columnWithDate, 1));
+            }
+            return _reportShift;
         }
 
         // InProgress

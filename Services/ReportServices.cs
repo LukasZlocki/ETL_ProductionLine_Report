@@ -1,8 +1,63 @@
 using ETL_ProductionLine_Report.Models;
+using Zigma.Models;
 
 namespace ETL_ProductionLine_Report.Services {
     public class ReportService : IReportService
     {
+
+        // [10.11.2023]
+        /// <summary>
+        /// Calculate daily reports for given dataset and list of dates for which reports will be calculated.
+        /// </summary>
+        /// <param name="dataset">ZigmaModel dataset</param>
+        /// <param name="dateSet">ZigmaModel dates list</param>
+        /// <returns>ZigmaModel daily reports</returns>
+        public ZigmaModel GetDailyReportsForGivenListOfDates(ZigmaModel dataset, ZigmaModel dateSet)
+        {
+            ZigmaModel _zModel = new();
+            List<ReportDaily> DailyReportsList = new();
+            List<string> datesConverted = new();
+            datesConverted = ConvertZigmaModelDatasetToListOfStrings(dateSet);
+            DailyReportsList = GetListOfDailyReports(dataset.GetRawZigmaDataset(), datesConverted, 0);
+            return _zModel;
+        }
+
+        // [10.11.2023]
+        /// <summary>
+        /// Calculate daily report for given day.
+        /// </summary>
+        /// <param name="dataset">ZigmaModel dataset</param>
+        /// <param name="date">Day to calculate daily report</param>
+        /// <returns></returns>
+        public ZigmaModel GetDailyReportForGivenDay(ZigmaModel dataset, string date)
+        {
+            ZigmaModel _zModel = new();
+            ZigmaModel _zDate = new();
+            _zDate = ConvertStringToZigmaModel(date);
+            _zModel = GetDailyReportsForGivenListOfDates(dataset, _zDate);
+            return _zModel;
+        }
+
+        //[10.11.2023]
+        private ZigmaModel ConvertStringToZigmaModel(string toConvert)
+        {
+            ZigmaModel _zModel = new();
+            List<string[]> _zmod = new();
+            _zmod.Add(new string[] {toConvert});
+            _zModel.CreateZigmaDatasetFromRawDataset(_zmod);
+            return _zModel;
+        }
+        private List<string> ConvertZigmaModelDatasetToListOfStrings(ZigmaModel zModelToConvert)
+        {
+            List<string> datasetList = new();
+            foreach(var item in zModelToConvert.GetRawZigmaDataset())
+            {
+                string _str = item[0];
+                datasetList.Add(_str);
+            }
+            return datasetList;
+        }
+
         // [06.10.2023] - InProgress
         public List<ReportDaily> GetListOfDailyReportsBaseOnDataset(List<string[]> dataset, int columnWithDate)
         {
