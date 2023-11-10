@@ -2,8 +2,8 @@
 using ETL_ProductionLine_Report.Repo;
 using ETL_ProductionLine_Report.Services;
 using Zigma.ExtractionTools;
-using Zigma.Models;
 using Zigma.TransformationTools;
+using Zigma.Models;
 
 // ToDo - Plan
 // ToDo: Get data from raw csv
@@ -15,38 +15,52 @@ using Zigma.TransformationTools;
 // ToDo Zigma | TransformTool | Add method to divide date by day / week / month and sign what to do with rest of columns (+, -, *, /)
 // ToDo Zigma | TransformTool | Add method to do math operation in particular column -ex: have result in particular column (operation +, - , * , /, )
 
-string filePath = "C:\\0 VirtualServer\\ETL\\";
-string fileName = "raw_raports.csv";
 
-// STEP I : Extracting data from csv row file
+// **** TOOLS PREPARATION ****
+TransformationTool transformIt = new();
+
+// **** DATE PREPARATION FROM RAW CSV ****
 PreparingData dataPreparation = new();
 ZigmaModel dateDatasetWithDateSimplify = dataPreparation.model;
+Console.WriteLine("Printing prepared dataset - 8 pcs example of set: ");
+dateDatasetWithDateSimplify.PrintZigmaDataset(8);
 
-// *************** PreparingData part (all upper)
+// **** CREATING LIST OF DATES ONLY ****
+ZigmaModel datesOnlyDataset = new();
+datesOnlyDataset = dateDatasetWithDateSimplify;
+datesOnlyDataset = transformIt.ColumnRemove(datesOnlyDataset, 3);
+datesOnlyDataset = transformIt.ColumnRemove(datesOnlyDataset, 2);
+datesOnlyDataset = transformIt.ColumnRemove(datesOnlyDataset, 1);
+Console.WriteLine("Creating dataset wih dates only extracted from dataset- 5 pcs example of dates set: ");
+datesOnlyDataset.PrintZigmaDataset(5);
 
-// STEP II : Creating daily report
-ReportService serviceReport = new();
-List<string> ListOfDates = new();
-ListOfDates = serviceReport.GetListOfDatesFromDataset(dateDatasetWithDateSimplify.GetRawZigmaDataset(), 0);
-Console.WriteLine("Printing available dates");
-foreach (string element in ListOfDates)
-{
-    Console.WriteLine("" + element);
-}
-List<ReportDaily> DailyReports = new();
-DailyReports = serviceReport.GetListOfDailyReportsBaseOnDataset(dateDatasetWithDateSimplify.GetRawZigmaDataset(), 0);
-Console.WriteLine("Daily reports calculation:");
-foreach (var report in DailyReports)
-{
-    Console.WriteLine(" " + report.Date + " " + " " + report.PlannedOutput + " " + " " + report.RealOutput + " " + " " + report.PlanedPercentage);
-}
-
+// **** CREATING DAILY REPORTS ****\
+ZigmaModel zDailyReports = new();
+ReportService DailyReportService = new();
+zDailyReports = DailyReportService.GetDailyReportsForGivenListOfDates(dateDatasetWithDateSimplify, datesOnlyDataset);
+Console.WriteLine("Creating daily reports - 5 pcs example of daily reports set: !!!!");
+zDailyReports.PrintZigmaDataset(5);
+/*
+CreatingDailyReport creatingDailyReport = new(dateDatasetWithDateSimplify);
+ZigmaModel DailyReports = creatingDailyReport.GetDailyReports();
+Console.WriteLine("Creating daily report - 5 pcs example of daily reports set: ");
+DailyReports.PrintZigmaDataset(5);
 // Save daily reports to csv file
-ZigmaModel zModel = ModelTransfer.TransferReportDailyListToZigmaModel(DailyReports);
 ExtractionTool saver = new();
-saver.SaveToCsvFile(zModel.GetZigmaDataset(), "C:\\0 VirtualServer\\ETL\\out\\", "DailyReports.csv");
+saver.SaveToCsvFile(DailyReports.GetZigmaDataset(), "C:\\0 VirtualServer\\ETL\\out\\", "DailyReports.csv");
+*/
 
-// *********** Creating daily report (all upper)
+// ** IN PROGRESS...
+// **** CREATING SHIFT REPORTS ****
+//ReportShiftService shiftReportService = new();
+//shiftReportService.GetListOfShiftReportsBaseOnDataset(dateDatasetWithDateSimplify.GetRawZigmaDataset(),0, dateDatasetWithDateSimplify);
+
+
+
+
+// ****
+
+/*
 
 // Creating shift report
 Console.WriteLine("*** Shift Report test - first shift report extraction ***");
@@ -94,9 +108,8 @@ List<ReportShift> shiftRep = _shiftService.GetListOfShiftReportsBaseOnDataset(cs
 
 ZigmaModel shiftZigmaReportModel = new();
 List<string[]> _reportList = new();
-foreach (var report in shiftRep)
-{
-    string[] _shiftReport = new string[] { report.Date, report.PlannedOutput, report.RealOutput, report.PlanedPercentage, report.Shift };
+foreach(var report in shiftRep){
+    string[] _shiftReport = new string[] {report.Date, report.PlannedOutput, report.RealOutput, report.PlanedPercentage, report.Shift};
     _reportList.Add(_shiftReport);
 }
 shiftZigmaReportModel.CreateZigmaDatasetFromRawDataset(_reportList);
@@ -113,3 +126,5 @@ reccureneceRemoved.PrintZigmaDataset(20);
 
 // [06112023]
 // Create shift reports for each shift for each day (ex day xxx , report shift 1,2,3 and then next day) and put it into file
+
+*/
